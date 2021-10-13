@@ -3,19 +3,19 @@ import sys, getopt
 
 letters = list(string.ascii_lowercase) + list(string.ascii_uppercase)
 
-def encrypt(text, key, letters=letters):
+def decrypt(text, key, letters=letters):
     result = ""
 
     for i in range(len(text)):
         char = text[i]
         if char in letters:
             if(char.isupper()):
-                result += chr((ord(char) + key-65) % 26 + 65)
+                result += chr((ord(char) - key-65) % 26 + 65)
             else:
-                result += chr((ord(char) + key-97) % 26 + 97)
+                result += chr((ord(char) - key-97) % 26 + 97)
         else:
             result += char
-    
+
     return(result)
 
 def main(argv):
@@ -45,7 +45,7 @@ def main(argv):
         file = open(input_file, "r")
         lines = file.readlines()
         for i in lines:
-            e_lines.append(encrypt(i,int(key)))
+            e_lines.append(decrypt(i,int(key)))
         file.close()
     except EOFError:
         print("Error: Invalid input file")
